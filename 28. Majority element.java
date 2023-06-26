@@ -18,15 +18,40 @@ public class Solution {
 		// return -1;
 
 		// Better : TC & SC : O(N) 
-		HashMap<Integer, Integer> map = new HashMap<>();
+		// HashMap<Integer, Integer> map = new HashMap<>();
+
+		// for(int i = 0; i < n; i++){
+		// 	map.put(arr[i], map.getOrDefault(arr[i], 0) + 1);
+		// }
+
+		// for(HashMap.Entry<Integer, Integer> mp : map.entrySet()){
+		// 	if(mp.getValue() > (n / 2)) return mp.getKey();
+		// }
+		// return -1;
+
+		// Optimal: Moor's Voting algo
+		// TC : O(N) && SC : O(1)
+
+		int cnt = 0;
+		int ele = 0;
 
 		for(int i = 0; i < n; i++){
-			map.put(arr[i], map.getOrDefault(arr[i], 0) + 1);
+			if(cnt == 0){
+				cnt = 1;
+				ele = arr[i];
+			} else if(arr[i] == ele){
+				cnt++;
+			} else {
+				cnt--;
+			}
 		}
 
-		for(HashMap.Entry<Integer, Integer> mp : map.entrySet()){
-			if(mp.getValue() > (n / 2)) return mp.getKey();
+		int cnt1 = 0;
+		for(int i = 0; i < n; i++){
+			if(arr[i] == ele) cnt1++;
 		}
+		if(cnt1 > n / 2) return ele;
+
 		return -1;
 	}
 }
