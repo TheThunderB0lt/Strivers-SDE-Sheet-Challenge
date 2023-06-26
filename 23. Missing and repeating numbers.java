@@ -92,3 +92,46 @@ public class Solution {
     }
 }
 
+import java.util.*;
+
+public class Solution {
+    public static int[] missingAndRepeating(ArrayList<Integer> arr, int n) {
+        int xor1 = 0;
+        for (int i = 1; i <= n; i++) {
+            xor1 ^= i; // Calculate XOR of numbers from 1 to n
+        }
+
+        int xor2 = 0;
+        for (int num : arr) {
+            xor2 ^= num; // Calculate XOR of elements in the array
+        }
+
+        int xor = xor1 ^ xor2; // XOR of missing and repeating numbers
+
+        int rightmostSetBit = xor & -xor; // Get the rightmost set bit in XOR result
+
+        int missing = 0;
+        int repeating = 0;
+
+        for (int num : arr) {
+            if ((num & rightmostSetBit) != 0) {
+                missing ^= num; // XOR elements with the rightmost set bit
+            } else {
+                repeating ^= num; // XOR elements without the rightmost set bit
+            }
+        }
+
+        for (int i = 1; i <= n; i++) {
+            if ((i & rightmostSetBit) != 0) {
+                missing ^= i; // XOR numbers from 1 to n with the rightmost set bit
+            } else {
+                repeating ^= i; // XOR numbers from 1 to n without the rightmost set bit
+            }
+        }
+
+        int[] res = new int[2];
+        res[0] = missing;
+        res[1] = repeating;
+        return res;
+    }
+}
